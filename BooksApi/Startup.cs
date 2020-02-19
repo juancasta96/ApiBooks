@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BooksApi.Models;
-using BooksApi.Services;
+using BooksApi.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PuntosApi.Services;
 
 namespace BooksApi
 {
@@ -29,13 +29,13 @@ namespace BooksApi
         public void ConfigureServices(IServiceCollection services)
         {
             // requires using Microsoft.Extensions.Options
-            services.Configure<BookstoreDatabaseSettings>(
-                Configuration.GetSection(nameof(BookstoreDatabaseSettings)));
+            services.Configure<PointsDatabaseSettings>(
+                Configuration.GetSection(nameof(PointsDatabaseSettings)));
 
-            services.AddSingleton<IBookstoreDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<BookstoreDatabaseSettings>>().Value);
+            services.AddSingleton<IPointsDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<PointsDatabaseSettings>>().Value);
 
-            services.AddSingleton<BookService>();
+            services.AddSingleton<PointsService>();
             services.AddControllers();
         }
 
