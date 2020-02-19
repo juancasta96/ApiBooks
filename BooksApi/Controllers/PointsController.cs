@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BooksApi.Model;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PuntosApi.Services;
@@ -20,10 +21,12 @@ namespace PointsApi.Controllers
             _pointService = puntoService;
         }
 
+        [EnableCors("http://localhost:4200")]
         [HttpGet]
         public ActionResult<List<Punto>> Get() =>
             _pointService.Get();
 
+        [EnableCors]
         [HttpGet("{id:length(24)}", Name = "GetPunto")]
         public ActionResult<Punto> Get(string id)
         {

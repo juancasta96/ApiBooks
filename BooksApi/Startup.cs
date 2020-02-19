@@ -28,6 +28,13 @@ namespace BooksApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("http://localhost:4200",
+                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            });
+
             // requires using Microsoft.Extensions.Options
             services.Configure<PointsDatabaseSettings>(
                 Configuration.GetSection(nameof(PointsDatabaseSettings)));
@@ -50,6 +57,8 @@ namespace BooksApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
